@@ -17,4 +17,19 @@ passport.use(new LocalStrategy (async (username, password, done) => {
     }
 }));
 
+passport.serializeUser((user, done) => {
+    console.log("We are inside sterilizeUser")
+    done(null, user._id)
+})
+
+passport.deserializeUser( async (_id, done) => {
+    try {
+        console.log("We are inside desterizeUser")
+        const user = await User.findById(_id)
+        done(null, user)
+    } catch (error) {
+        done(error)
+    }
+})
+
 export default passport;
