@@ -1,8 +1,24 @@
 import React from 'react'
+import TwoFAVerification from '../components/TwoFAVerification'
+import { useNavigate } from 'react-router-dom'
 
 const Verify2fa = () => {
+  const navigate = useNavigate()
+
+  const handleVerification = async (data) => {
+    if (data) {
+      navigate('/')
+    }
+  }
+
+  const handle2FAReset = async (data) => {
+    if (data) {
+      navigate('/setup-2fa')
+    }
+  }
+
   return (
-    <div>Verify2fa</div>
+    <TwoFAVerification onVerifySuccess={handleVerification} onResetSuccess={handle2FAReset} />
   )
 }
 
