@@ -33,7 +33,9 @@ const TwoFASetup = ({ onSetupComplete }) => {
             </p>
             <div className=' p-6'>
                 <div className=' flex justify-center'>
-                    <img src={response.qrImageUrl} alt="2FA QR Code" className=' mb-4 border rounded-md' />
+                    {response.qrImageUrl ? (
+                        <img src={response.qrImageUrl} alt="2FA QR Code" className=' mb-4 border rounded-md' />
+                    ) : ("") }  
                 </div>
                 <div className=' flex items-center mt-3 mb-3'>
                     <div className=' border-t border-2 border-gray-200 flex-grow'></div>
