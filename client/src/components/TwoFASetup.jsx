@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { setup2fa } from '../service/authApi'
 
 const TwoFASetup = ({ onSetupComplete }) => {
-    const [response, setResponse] = useState({})
+    const [response, setResponse] = useState({ secret: "" })
     const [message, setMessage] = useState("")
 
     const fetchQRCode = async () => {
@@ -49,7 +49,6 @@ const TwoFASetup = ({ onSetupComplete }) => {
                 { message && <p className=' text-green-600 text-sm mb-3'>{message}</p> }
                 <input 
                     readOnly
-                    defaultValue=""
                     value={response.secret}
                     className=' w-full border rounded mt-2 text-xs text-gray-600 p-4'
                     onClick={copyClipBoard}

@@ -8,7 +8,7 @@ const TwoFAVerification = ({ onVerifySuccess, onResetSuccess }) => {
     const handleTokenVerification = async (e) => {
         e.preventDefault()
         try {
-            const { data } = verify2fa(data)
+            const { data } = await verify2fa({ otp })
             onVerifySuccess(data)
         } catch (error) {
             setOtp("")
