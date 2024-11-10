@@ -1,11 +1,21 @@
 import React from 'react'
 import { useSession } from '../context/SessionContext'
 import { useNavigate } from 'react-router-dom'
+import { logoutUser } from '../service/authApi'
 
 const HomePage = () => {
   const navigate = useNavigate()
   const { user, logout } = useSession()
   
+  const handleLogout = async () => {
+    try {
+      const { data } = logoutUser()
+      logout(data)
+      navigate("/login")
+    } catch (error) {
+      console.log("Error : ", error.message)
+    }
+  }
 
   return (
     <div className=' p-6 bg-white rounded-lg shadow-md max-w-md mx-auto mt-10'>
@@ -13,7 +23,7 @@ const HomePage = () => {
         Welcome, {user.username}!
       </h2>
       <p>You have successfullly logged in and verified your 2FA</p>
-      <button type='button' className=' mt-4 bg-red-500 text-white px-4 py-2 rounded'>
+      <button onClick={handleLogout} type='button' className=' mt-4 bg-red-500 text-white px-4 py-2 rounded'>
         Logout
       </button>
     </div>

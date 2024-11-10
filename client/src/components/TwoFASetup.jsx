@@ -3,13 +3,18 @@ import { useState } from 'react'
 import { setup2fa } from '../service/authApi'
 
 const TwoFASetup = ({ onSetupComplete }) => {
-    const [response, setResponse] = useState({ secret: "" })
+    const [response, setResponse] = useState({})
     const [message, setMessage] = useState("")
 
     const fetchQRCode = async () => {
+       try {
         const { data } = await setup2fa()
         console.log(data)
         setResponse(data)
+       } catch (error) {
+        console.error("Failed to fetch QR code:", error);
+        setMessage("Failed to set up 2FA. Please try again.");
+       }
     }
 
     useEffect(() => {

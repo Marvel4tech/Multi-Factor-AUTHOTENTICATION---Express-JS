@@ -47,8 +47,16 @@ export const logout = async (req, res) => {
         res.status(401).json({ message: "Unauthorize user" })
     }
     req.logout((err) => {
-        if (err) return res.status(400).json({ message: "User not logged in" })
-        res.status(200).json({ message: "Logout successful" })
+        if(err) {
+            next(err)
+        }
+        req.session.destroy((err) => {
+            if(err) {
+                next(err)
+            }
+            res.clearCookie('connect.sid')
+            res.status(200).json({ message: "User logged out successfully" })
+        })
     })
 }
 
