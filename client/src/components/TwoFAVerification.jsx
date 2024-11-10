@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { reset2fa, verify2fa } from '../service/authApi'
 
-const TwoFAVerification = () => {
+const TwoFAVerification = ({ onVerifySuccess, onResetSuccess }) => {
+    const [otp, setOtp] = useState("")
+    const [error, setError] = useState("")
+
+    const handleTokenVerification = async (e) => {
+        e.preventDefault()
+        try {
+            const { data } = verify2fa(data)
+            onVerifySuccess(data)
+        } catch (error) {
+            setOtp("")
+            console.log("The error is : ", error.message)
+            setError("Invalid OTP")
+        }
+    }
+
+    const handleReset = async () => {
+        try {
+            const { data } = reset2fa()
+            onResetSuccess(data)
+        } catch (error) {
+            console.log("The error is : ", error.message)
+            setError(error.message)
+        }
+    }
 
   return (
     <form onSubmit={handleTokenVerification} className=' bg-white rounded-lg shadow-md w-full max-w-sm mx-auto'>
@@ -33,14 +58,6 @@ const TwoFAVerification = () => {
                 <button onClick={handleReset} className=' w-full bg-slate-600 text-white py-2 rounded-md' type='button'>
                     Reset 2FA
                 </button>
-                <div>
-                    <p className=' pt-4 text-center text-gray-600 text-sm'>
-                        {isRegister ? "Already have an account ? " : "Don't have an account ? "} 
-                        <Link to="" onClick={handleRegisterToggle}>
-                            {isRegister ? "Login" : "Create Account"}
-                        </Link>
-                    </p>
-                </div>
             </div>
         </div>
     </form>
